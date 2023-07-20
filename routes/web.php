@@ -5,6 +5,7 @@ use App\Http\Controllers\SocialController;
 use App\Notifications\EmailNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Models\User;
+use OpenAI\Laravel\Facades\OpenAI;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,4 +36,16 @@ Route::get('/send-notification',function(){
     Notification::send($user, new EmailNotification('Arefin','Email'));
    }
     return redirect()->back();
+});
+
+
+Route::get('/openai',function(){
+
+    $result = OpenAI::completions()->create([
+        'model' => 'text-davinci-003',
+        'prompt' => 'PHP is',
+]);
+
+echo $result['choices'][0]['text'];
+
 });
